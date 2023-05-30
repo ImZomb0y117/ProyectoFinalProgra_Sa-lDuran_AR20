@@ -12,9 +12,9 @@ constructor (scene,x,y,layer){
 }
 updateScore() {
     // Increase the score based on the character's position
-    const characterY = this.layer.y - this.scene.cameras.main.height + this.scene.character.y;
+    const characterY = this.layer.y - this.scene.cameras.main.height + this.scene.ranita.y;
     const scoreIncrease = Math.max(0, Math.floor(characterY / 10));
     this.score += scoreIncrease;
-    this.text.setText("Score: " + this.score);
+    this.text.setText("Score: " + this.score.toString());
   }
 }

@@ -34,10 +34,15 @@ export default class GameScene extends Doodlescene {
         this.botonPausa = this.add.sprite(this.config.width - 32, 32,"botonPausa").setInteractive ();
         this.botonPausa. setScale (3);
         this.botonPausa. on ("pointerup", this.paused, this);
+        this.score = new Score(this, 10, 10, this.layers.ui);
+        this.score.updateScore ();
     }
     update (time,delta){
         if(this.isPaused){
 
+        }
+        else {
+           // this.score.updateScore();
         }
     }
     paused(){
