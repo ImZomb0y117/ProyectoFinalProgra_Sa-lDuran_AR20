@@ -27,7 +27,7 @@ export default class GameScene extends Doodlescene {
         this.layers.game.add(this.ranita);
         this.ranita.body.setCollideWorldBounds(true);
         this.plataformas. spawnPlatform ();
-        this.plataformas. spawnMultiplePlatforms (5);
+        this.plataformas. spawnMultiplePlatforms (15);
        // this.cameras.main.setBounds(0,0,bg,displayWidth,bg,displayHeight);
         //this.cameras.main.startFollow(this.ranita);
         //Align.scaleToGameW(bg, 2);
@@ -42,7 +42,7 @@ export default class GameScene extends Doodlescene {
 
         }
         else {
-           // this.score.updateScore();
+           this.score.updateScore();
         }
     }
     paused(){
