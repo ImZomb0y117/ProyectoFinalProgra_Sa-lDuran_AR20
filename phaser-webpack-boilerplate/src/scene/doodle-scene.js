@@ -17,4 +17,24 @@ export default class Doodlescene extends Phaser.Scene{
         const sky = this.add.image(0, 0, "Sky").setOrigin(0);
         this.layers.background.add(sky);
     }
+    showMenu(menu) {
+        let yPos = menu.firstItemPosition.y;
+        this.activeMenu = this.add.group();
+
+        menu.items.forEach(item => {
+            const textObject = this.add.text(menu.firstItemPosition.x, yPos, item.label, item.style)
+            .setOrigin(menu.origin.x, menu.origin.y)
+            .setInteractive();
+            yPos += menu.spacing;
+            textObject.on("pointerup", item.onClick, this)
+            textObject.on("pointerover", ()=> {item.onMouseEnter(textObject)}, this);
+            textObject.on("pointerover", ()=> {item.onMouseExit(textObject)}, this);
+            this.activeMenu.add(textObject);
+        });
+    }
+
+    hideMenu() {
+        if(this.activeMenu) this.activeMenu.clear(true, true);
+        this.activeMenu = null;
+    }
 }

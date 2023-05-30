@@ -1,52 +1,51 @@
 import Doodlescene from "./doodle-scene";
 
-export default class MenuScene extends Phaser.Scene {
-    constructor() {
-        super("MenuScene",config);
+export default class MenuScene extends Doodlescene {
+    constructor(config) {
+        super("MenuScene", config);
     }
 
     preload (){
         this.load.image("Sky","assets/sky.png");
     }
     create() {
-        // Fondo del menú
-        //this.add.image(0, 0, "menuBackground").setOrigin(0, 0);
+        const playButtonCallbacks = {
+            onClick: this.playButton_OnClick,
+            onMouseEnter: this.anyButton_OnMouseEnter,
+            onMouseExit: this.anyButton_OnMouseExit
+        }
 
-        // Título del juego
-        this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY - 100,
-            "Ranita Saltarina",
-            {
-                fontSize: "48px",
-                fontFamily: "Arial",
-                color: "#ffffff",
-            }
-        ).setOrigin(0.5);
+        const scoreButtonCallbacks = {
+            onClick: this.playButton_OnClick,
+            onMouseEnter: this.anyButton_OnMouseEnter,
+            onMouseExit: this.anyButton_OnMouseExit
+        }
 
-        // Botón de inicio
-        const startButton = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            "Iniciar Juego",
-            {
-                fontSize: "32px",
-                fontFamily: "Arial",
-                color: "#ffffff",
-                backgroundColor: "#000000",
-                padding: {
-                    left: 20,
-                    right: 20,
-                    top: 10,
-                    bottom: 10,
-                },
-            }
-        ).setOrigin(0.5);
+        const mainMenu = {
+            items: [
+                {label: "Play", style: {fontSize: "32px", fill: "#FFF"}, ...playButtonCallbacks},
+                {label: "Score", style: {fontSize: "32px", fill: "#FFF"}, ...scoreButtonCallbacks},
+            ],
+            firstItemPosition: {x: this.config.width / 2, y: this.config.height / 2},
+            origin: {x: 0.5, y: 0.5},
+            spacing: 45
+        }
+        this.showMenu(mainMenu);
+    }
 
-        // Manejador de eventos para el botón de inicio
-        startButton.setInteractive();
-        startButton.on("pointerup", () => {
-            this.scene.start("main-scene");
-        });
+    playButton_OnClick() {
+        this.scene.start("MainScene");
+    
+    }
+    scoreButton_OnClick() {
+        this.scene.start("ScoreScene");
+    }
+
+    anyButton_OnMouseEnter(text) {
+        text.setFill("#0F0");
+    }
+
+    anyButton_OnMouseExit(text) {
+        text.setFill("#FFF");
     }
 }
