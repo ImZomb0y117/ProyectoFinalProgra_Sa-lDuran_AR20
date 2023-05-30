@@ -43,7 +43,10 @@ export default class GameScene extends Doodlescene {
         }
         else {
            this.score.updateScore();
+           if (this.ranita.y > this.cameras.main.height) {
+            this.gameOver();
         }
+    }
     }
     paused(){
         this.physics.pause();
@@ -84,6 +87,44 @@ export default class GameScene extends Doodlescene {
           quitGame(){
             this.isPaused = false
             this.scene.start ("MenuScene");
+          }
+          gameOver(){
+           // this.plataformas.stop();
+            this.ranitaCollision.destroy();
+            this.gameOverMenu(); 
+          }
+          gameOverMenu(){
+            const gameOverText = this.add.text(
+                this.config.width / 2,
+                this.config.height / 2 - 100,
+                "Desvivido.",
+                {fontSize: "48px", fill: "#FFF"}
+              );
+              gameOverText.setOrigin(0.5);
+          
+              const retryButtonCallbacks = {
+                onClick: this.restartGame.bind(this),
+                onMouseEnter: text => text.setFill("#0F0"),
+                onMouseExit: text => text.setFill("#FFF"),
+              };
+          
+              const quitButtonCallbacks = {
+                onClick: this.quitGame.bind(this),
+                onMouseEnter: text => text.setFill("#F00"),
+                onMouseExit: text => text.setFill("#FFF"),
+              };
+          
+              const gameOverMenu = {
+                items: [
+                  { label: "Retry", style: { fontSize: "32px", fill: "#FFF" }, ...retryButtonCallbacks },
+                  { label: "Quit", style: { fontSize: "32px", fill: "#FFF" }, ...quitButtonCallbacks },
+                ],
+                firstItemPosition: { x: this.config.width / 2, y: this.config.height / 2 },
+                origin: { x: 0.5, y: 0.5 },
+                spacing: 45,
+              };
+          
+              this.showMenu(gameOverMenu);
           }
     touchPlatform (){
 
